@@ -16,13 +16,14 @@ BASE_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    "apps.users.apps.UsersConfig",
+]
 
 THIRD_APPS = [
     'rest_framework',
     'corsheaders',
 ]
-
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
