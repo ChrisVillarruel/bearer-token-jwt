@@ -18,6 +18,7 @@ BASE_APPS = [
 
 LOCAL_APPS = [
     "apps.users.apps.UsersConfig",
+    "apps.message_catalog.apps.MessageCatalogConfig",
 ]
 
 THIRD_APPS = [
