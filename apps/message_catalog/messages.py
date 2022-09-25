@@ -10,7 +10,7 @@ class MyValidationError:
 
     @property
     def _get_error_code(self) -> Dict[str, Any]:
-        return MessageCatalog.objects.get_code_error(self.cat_error_id)
+        return MessageCatalog.objects.get_code_message(self.cat_error_id)
 
     @property
     def validation_error(self) -> Dict[str, Any]:
