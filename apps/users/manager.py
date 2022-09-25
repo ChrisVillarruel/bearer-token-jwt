@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.contrib.auth.base_user import BaseUserManager
 
 
@@ -24,4 +26,26 @@ class UserManager(BaseUserManager):
             .get(
                 email=email,
             )
+        )
+
+    def get_info_user(self, user_id: int) -> dict[str, Any]:
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                id=user_id
+            )
+            .values(
+                "id",
+                "email",
+                "username",
+                "name",
+                "last_name",
+                "mother_last_name",
+                "is_active",
+                "is_new",
+                "last_login",
+                "state",
+            )
+            .first()
         )
