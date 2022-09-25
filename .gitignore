@@ -1,5 +1,5 @@
 .idea
 .venv
 .env
-
+test.py
 **/__pycache__/
