@@ -1,4 +1,6 @@
 import datetime as dt
+import random
+import string
 import uuid
 
 from apps.base.models import BaseModel
@@ -30,17 +32,34 @@ class User(AbstractBaseUser, BaseModel):
         verbose_name_plural = "User"
         db_table = "User"
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.hex_id
+
+    @staticmethod
+    def _spilt_string(data: str) -> list[str]:
+        if data:
+            return data.upper().split()
+        return "".split()
+
+    @property
+    def _random_string(self) -> str:
+        return "".join(random.choices(string.ascii_uppercase, k=12))
+
+    @property
+    def generate_username(self) -> str:
+        name: list[str] = self._spilt_string(str(self.name))
+        last_name: list[str] = self._spilt_string(str(self.last_name))
+        mother_last_name: list[str] = self._spilt_string(str(self.mother_last_name))
+        ascii_uppercase = self._random_string.split()
+
+        name.extend(last_name)
+        name.extend(mother_last_name)
+        name.extend(ascii_uppercase)
+        return "".join(name)
 
     @property
     def get_user_id(self):
         return self.id
 
-    @staticmethod
-    def _unix_time(date_time: dt.datetime):
-        return dt.datetime.timestamp(date_time)
-
     def save(self, *args, **kwargs):
-        self.hex_id = self.id_length.hex
         super().save(*args, **kwargs)

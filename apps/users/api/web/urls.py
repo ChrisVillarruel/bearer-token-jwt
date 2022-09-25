@@ -1,3 +1,8 @@
-from django.urls import path, include
+from django.urls import path
 
-urlpatterns = []
+from apps.users.api.web.views.views import APILoginUser, APIUserInfo
+
+urlpatterns = [
+    path("v1/login/", APILoginUser.as_view()),
+    path("v1/UseInf/", APIUserInfo.as_view()),
+]

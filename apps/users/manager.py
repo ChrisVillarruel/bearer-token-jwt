@@ -6,13 +6,13 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(kwargs.get("email")),
             password=kwargs.get("password"),
-            username=kwargs.get("username"),
             name=kwargs.get("name"),
             last_name=kwargs.get("last_name"),
             mother_last_name=kwargs.get("mother_last_name"),
-            is_new=True,
         )
 
+        user.username = user.generate_username
+        user.hex_id = user.id_length.hex
         user.set_password(user.password)
         user.save()
         return user
