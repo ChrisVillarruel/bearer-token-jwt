@@ -93,6 +93,7 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
 
 # Configuración CORS
 CORS_ALLOWED_ORIGINS = [
@@ -119,3 +120,10 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+REST_FRAMEWORK = {
+    'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'config.backends.authentication.authorization.JWTAuthentication',
+    ),
+}
