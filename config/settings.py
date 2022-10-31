@@ -1,5 +1,10 @@
+import os
 from pathlib import Path
-import config.db as db
+
+from decouple import config
+
+import config.db.database as db
+import config.constans as cn
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5#hvb$wd@nl@v*frm3qlacp@!@6nr#x0+z$yu)11$fz%e-e2d)'
@@ -43,7 +48,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/emails')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +69,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DATABASES = db.SQLITE
+CACHES = db.CACHE_TABLE
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -127,3 +133,10 @@ REST_FRAMEWORK = {
         'config.backends.authentication.authorization.JWTAuthentication',
     ),
 }
+
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = cn.EMAIL_HOST
+EMAIL_HOST_USER = cn.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = cn.EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL = cn.DEFAULT_FROM_EMAIL
