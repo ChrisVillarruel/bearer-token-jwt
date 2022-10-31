@@ -1,12 +1,11 @@
 from typing import ClassVar
-from cryptography.hazmat.primitives import serialization, hashes
-from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import serialization
 
 from config.constans import PASSPHRASE, FILENAME_PUBLIC_KEY_LOCATION, FILENAME_PRIVATE_KEY_LOCATION
 
 
 class ImportKeysCryptography:
-    """ Importar llaves RSA tanto privadas como publicas utilizando cryptography """
+    """ Importa llaves RSA tanto privadas como publicas utilizando cryptography """
 
     _file_name: ClassVar[str]
     _PASSPHRASE: ClassVar[bytes] = PASSPHRASE.encode()

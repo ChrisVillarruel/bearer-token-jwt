@@ -9,10 +9,10 @@ from rest_framework import authentication, exceptions
 
 from apps.message_catalog.messages import MyValidationError
 from apps.users.models import User
-from config.constans import PASSPHRASE, FILENAME_PRIVATE_KEY_LOCATION
 from config.backends.authentication.jwt_token import DecodeJWT
 from config.backends.exceptions.base_exceptions import BaseAthorizationException
 from config.backends.rsa_keys.import_keys_jwk import ImportKeysJWE
+from config.settings import LIST_SERVICES_WITHOUT_AUTHENTICATING
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
@@ -25,7 +25,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         auth_header = authentication.get_authorization_header(request).split()
         auth_header_prefix = self._authentication_header_prefix.lower()
 
-        if request.headers.get("TypeService") == "Login":
+        if request.headers.get("TypeService") in LIST_SERVICES_WITHOUT_AUTHENTICATING:
             return None
         elif not auth_header:
             err = MyValidationError(5).validation_error
@@ -65,13 +65,13 @@ class JWTAuthentication(authentication.BaseAuthentication):
         except ObjectDoesNotExist:
             err = MyValidationError(11).validation_error
             raise exceptions.AuthenticationFailed(err)
-        except JWException as e:
+        except JWException as _:
             err = MyValidationError(12).validation_error
             raise exceptions.AuthenticationFailed(err)
         except BaseAthorizationException as e:
             err = MyValidationError(e.code_error).validation_error
             raise exceptions.AuthenticationFailed(err)
-        except Exception as e:
+        except Exception as _:
             err = MyValidationError(12).validation_error
             raise exceptions.AuthenticationFailed(err)
         return user, token
